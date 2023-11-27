@@ -68,13 +68,14 @@ class MusicPlayerViewController: UIViewController {
         coverImageView.contentMode = .center
     }
 
+
     // Fetch cover image based on cover key from the API
     func fetchCoverImage(coverID: String) {
         guard let coverURL = URL(string: "https://cms.samespace.com?/assets/\(coverID)") else {
             return
         }
         
-        // Error loading cover image: Image url is blacklisted
+        // Error loading cover image: Image url is blacklisted // (https://cms.samespace.com/assets/your_cover_id)
 // received in console
         
         // Use SDWebImage for asynchronous image loading
