@@ -21,11 +21,10 @@ class TopTracksViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Set the dataSource and delegate programmatically
         tableView.dataSource = self
-        tableView.delegate = self
+         tableView.delegate = self
         
-        // Make system background color dark
+        // background color dark
               view.backgroundColor = UIColor.systemBackground
         
         // Set the overrideUserInterfaceStyle to .dark
@@ -36,7 +35,9 @@ class TopTracksViewController: UIViewController, UITableViewDataSource, UITableV
         APIManager.fetchTopTracks { result in
             switch result {
             case .success(let music):
+                
                 self.topTracks = music.data
+                
                 print("Fetched top tracks: \(self.topTracks)")
 
                 DispatchQueue.main.async {
@@ -48,9 +49,10 @@ class TopTracksViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
 
-        // Set up blurry effect background
+        // blurry effect background
         let blurEffect = UIBlurEffect(style: .regular) // You can change .light to .dark or .extraLight
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
         blurEffectView.frame = self.view.bounds
         self.view.insertSubview(blurEffectView, at: 0)
 
@@ -79,15 +81,16 @@ class TopTracksViewController: UIViewController, UITableViewDataSource, UITableV
 
         // Create and configure an image view for the circular cover image
         let coverImageView = UIImageView()
+        
         coverImageView.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(coverImageView)
-
+         cell.contentView.addSubview(coverImageView)
+ 
         if let coverURL = URL(string: "https://cms.samespace.com?/assets/\(topTrack.cover)") {
             coverImageView.sd_setImage(with: coverURL, placeholderImage: UIImage(named: "PlaceHolderimage"))
             print("Setting cover image for top track: \(topTrack.name)")
         }
 
-        // Set background color to system background
+        // system background
                 cell.contentView.backgroundColor = UIColor.systemBackground
         
 //        // Set background color to white
@@ -109,7 +112,8 @@ class TopTracksViewController: UIViewController, UITableViewDataSource, UITableV
         cell.contentView.addSubview(nameLabel)
         cell.contentView.addSubview(detailLabel)
 
-        // Set up constraints for the circular cover image
+        // cover image constraintt
+        
         NSLayoutConstraint.activate([
             // Constraints for the circular cover image
             coverImageView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 8),
@@ -129,7 +133,9 @@ class TopTracksViewController: UIViewController, UITableViewDataSource, UITableV
 
         // Make the cover image circular and fill the image view
         coverImageView.layer.cornerRadius = coverImageView.frame.size.height / 2
+        
         coverImageView.clipsToBounds = true
+        
         coverImageView.contentMode = .scaleAspectFill
 
         cell.accessoryType = .disclosureIndicator
@@ -140,16 +146,16 @@ class TopTracksViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedTopTrack = topTracks[indexPath.row]
 
-        // Apply a custom selection effect
+        // selection effect
               tableView.deselectRow(at: indexPath, animated: true)
               if let cell = tableView.cellForRow(at: indexPath) {
                   UIView.animate(withDuration: 0.0, animations: {
                       cell.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
                       cell.contentView.backgroundColor = UIColor.systemCyan
                   }) { _ in
-                      UIView.animate(withDuration: 0.0) {
+                       UIView.animate(withDuration: 0.0) {
                           cell.transform = .identity
-                          cell.contentView.backgroundColor = .secondarySystemFill
+                            cell.contentView.backgroundColor = .secondarySystemFill
                       }
                   }
               }
