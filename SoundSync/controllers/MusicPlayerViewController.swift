@@ -32,18 +32,17 @@ class MusicPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set up UI with selected song details
+        // UI with selected song details
         if let song = selectedSong {
             songNameLabel.text = song.name
             artistLabel.text = song.artist
             
-            // Fetch cover image based on the cover key from the API
             if let cover = selectedSong?.cover, !cover.isEmpty {
                 fetchCoverImage(coverID: cover)
             }
         }
         
-        // Load and play the selected song
+        // Load and play
         if let songURLString = selectedSong?.url, let songURL = URL(string: songURLString) {
             // Create an AVPlayerItem with the URL
             let playerItem = AVPlayerItem(url: songURL)
@@ -61,7 +60,7 @@ class MusicPlayerViewController: UIViewController {
         // Update play/pause button dynamically
         updatePlayPauseButton()
         
-        // Set dark background
+        //  dark background
 //        view.backgroundColor = UIColor.black
         
         // Center align the cover image
@@ -69,7 +68,7 @@ class MusicPlayerViewController: UIViewController {
     }
 
 
-    // Fetch cover image based on cover key from the API
+    // Fetchinng the cover image based on cover key from the API
     func fetchCoverImage(coverID: String) {
         guard let coverURL = URL(string: "https://cms.samespace.com?/assets/\(coverID)") else {
             return
@@ -95,7 +94,7 @@ class MusicPlayerViewController: UIViewController {
         )
     }
     
-    // Play/Pause button action
+    // Play/Pause button 
     @IBAction func playPauseButtonTapped(_ sender: UIButton) {
         if let player = player {
             if player.rate == 1 {
@@ -115,13 +114,13 @@ class MusicPlayerViewController: UIViewController {
         }
     }
     
-    // Previous button action
+    // Previous button 
     @IBAction func previousButtonTapped(_ sender: UIButton) {
         // Implement logic to play the previous song
         playPreviousSong()
     }
-    
-    // Next button action
+
+    // Next button 
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         // Implement logic to play the next song
         playNextSong()
@@ -131,11 +130,14 @@ class MusicPlayerViewController: UIViewController {
     func enableSwipeGestures() {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
         swipeRight.direction = .right
+        
         view.addGestureRecognizer(swipeRight)
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+            let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
         swipeLeft.direction = .left
-        view.addGestureRecognizer(swipeLeft)
+
+        
+         view.addGestureRecognizer(swipeLeft)
     }
     
     // Handle swipe gestures
@@ -143,7 +145,7 @@ class MusicPlayerViewController: UIViewController {
         switch gesture.direction {
         case .right:
             // Swipe right to play the previous song
-            playPreviousSong()
+              playPreviousSong()
         case .left:
             // Swipe left to play the next song
             playNextSong()
@@ -154,15 +156,13 @@ class MusicPlayerViewController: UIViewController {
     
     // Play the previous song
     func playPreviousSong() {
-        // Implement logic to play the previous song
-        // For simplicity, you can stop the current song and play the first song
-        stopAndPlayFirstSong()
+    
+           stopAndPlayFirstSong()
     }
     
     // Play the next song
     func playNextSong() {
-        // Implement logic to play the next song
-        // For simplicity, you can stop the current song and play the first song
+       
         stopAndPlayFirstSong()
     }
     
@@ -191,7 +191,8 @@ class MusicPlayerViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        coverImageView.layer.cornerRadius = coverImageView.frame.size.height / 2
+        
+          coverImageView.layer.cornerRadius = coverImageView.frame.size.height / 2
         coverImageView.clipsToBounds = true
     }
 }
